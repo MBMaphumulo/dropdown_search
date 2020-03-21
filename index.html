@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Dropdown Search</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto">
+    <link rel="stylesheet" href="css/main.css">
+
+    <style>
+        * {
+            font-family: "Roboto";
+        }
+
+        :root {
+            --primary-color: rgba(73, 71, 71, 0.63);
+            --secondary: #ccc;
+            --tertiary: 15px;
+        }
+
+        .serach-container {
+            position: absolute;
+            margin: 50px auto;
+            width: 96%;
+            height: 70%;
+            border: 1px solid var(--primary-color);
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 1px 1px 1px var(--secondary);
+        }
+
+        .search-header {
+            border-bottom: 1px solid #ccc;
+            text-align: center;
+            color: rgb(124, 121, 121);
+        }
+
+        .search-footer {
+            position: absolute;
+            bottom: 0;
+            border-top: 1px solid #ccc;
+            width: 97%;
+            padding: 20px;
+            text-align: center;
+            font-weight: bolder;
+            color: rgb(124, 121, 121);
+        }
+
+        .search-footer a {
+            text-decoration: none;
+            color: rgb(85, 85, 85);
+        }
+
+        #search {
+            cursor: pointer;
+            margin-top: 10px;
+            position: relative;
+            border: 1px solid #ccc;
+            width: 544px;
+            border-radius: 5px;
+            border-bottom-left-radius: 0;
+            border-bottom-right-radius: 0;
+            padding: 0px 15px 20px 15px;
+            color: #000;
+            overflow-y: auto;
+        }
+
+        .search-focus {
+            border: 2px solid rgba(18, 206, 175, 0.486) !important;
+            transition: 500ms;
+        }
+
+        .search-list {
+            position: relative;
+            width: 549px;
+            padding: 17px 20px 0 5px;
+            border: 1px solid #ccc;
+            border-top: none;
+            border-radius: 5px;
+            border-top-left-radius: 0;
+            border-top-right-radius: 0;
+            margin-top: -10px;
+        }
+
+        .search-body {
+            width: 500px;
+            margin: 0 auto;
+        }
+
+        .contact-list {
+            position: relative;
+            list-style: none;
+            width: 102%;
+            padding: 0;
+            margin: 0 0px 10px 0;
+            overflow-y: auto;
+            height: 150px;
+        }
+
+        .list-item {
+            padding: 5px 10px;
+            border: 1px solid #ccc;
+            border-top: none;
+            transition: 1000ms;
+        }
+
+        .list-item:hover {
+            cursor: pointer;
+            background-image: linear-gradient(to right bottom, rgb(241, 241, 241) 0%, rgb(209, 208, 208) 100%) !important;
+            transition: 1000ms;
+        }
+
+
+        .contact-image {
+            position: relative;
+            width: 10%;
+        }
+
+        .contact-image img {
+            /* border:1px solid #ccc; */
+
+            border-radius: 50%;
+            width: 50px;
+            box-shadow: -1px 3px 4px 0px #0000006e;
+        }
+
+        .contact-info {
+            /* position: absolute; */
+            float: right;
+            position: inherit;
+            width: 88%;
+            margin: -60px 0 0 0;
+            padding: 0;
+        }
+
+        .contact-title {
+            font-weight: bolder;
+            padding: 12px 0 0 0;
+        }
+
+        .contact-sub-title {
+            font-weight: 600;
+            color: rgb(151, 151, 151);
+            padding: 0 0 2px 0;
+        }
+
+        #value-search {
+            width: 98%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            border-bottom-left-radius: 0;
+            border-bottom-right-radius: 0;
+        }
+
+        input {
+            outline: none;
+        }
+
+        .contact-item {
+            padding: 9px;
+            border-radius: 30px;
+            border: 1px solid #ccc;
+            background-color: beige;
+            color: #000;
+            float: left;
+            margin: 5px 5px 0px 0px;
+            font-weight: 600;
+        }
+
+        .remove-item {
+            border-radius: 50%;
+            padding: 0px 6px 0px 6px;
+            margin: -1px 0px 0 4px;
+            text-align: center;
+            font-weight: bolder;
+            color: wheat;
+            background-image: linear-gradient(to right bottom, rgb(99, 98, 98) 0%, rgb(0, 0, 0) 100%) !important;
+            cursor: pointer;
+            transition: 500ms;
+        }
+
+        .remove-item:hover {
+            background-image: linear-gradient(to right bottom, rgb(219, 80, 80) 0%, rgb(175, 6, 6) 100%) !important;
+            transition: 500ms;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="serach-container">
+            <div class="search-header">
+                <h1>Dropdown Search</h1>
+            </div>
+            <div class="search-body">
+                <div id="search">
+                    <div style="padding-top: 15px;" onclick="toggleitem('#search-list')">
+                        Select contact
+                    </div>
+                </div>
+                <div id="search-list" class="search-list">
+                    <input type="text" name="input-search" id="value-search" placeholder="search contact">
+
+                    <ul class="contact-list" id="contact-list">
+
+                    </ul>
+                </div>
+                <button class="btn btn-primary" onclick="send()">SEND</button>
+            </div>
+            <div class="search-footer">
+                &copy;Copyright 2019 - <a href="https://www.ingeniousvision.co.za">Ingenious Vision</a>
+            </div>
+        </div>
+    </div>
+
+
+    <script src="js/jquery.js"></script>
+    <script src="js/main.js"></script>
+    <script>
+        $('#value-search').on('click', function () {
+            $(this).addClass('search-focus');
+        });
+        // $('#value-search').onfocusout('click', function() {
+        //     $(this).removeClass('search-focus');
+        // });
+
+        document.getElementById("value-search").addEventListener("focusout", function () {
+            $(this).removeClass('search-focus');
+        });
+
+
+        var input = document.getElementById("value-search");
+        var count = 0;
+
+
+        function send() {
+            var numbers = getNumbers();
+
+            console.log(numbers);
+        }
+
+        function getNumbers() {
+            var numbers = [];
+            var str_numbers = "";
+
+            $('.number').each(function () {
+                numbers.push($(this).val());
+            });
+
+            str_numbers = numbers.join(";");
+
+            return { arr: numbers, str: str_numbers };
+        }
+
+        function checkNumber(number) {
+
+            var numbers = getNumbers();
+
+            if ((numbers.str).indexOf(number) > -1) {
+                return true;
+            } else {
+                return false;
+            }
+        }
+
+        input.addEventListener("keyup", function (event) {
+            if (event.keyCode === 13) {
+                event.preventDefault();
+                var input_value = $('#value-search').val();
+
+                if (isNaN(input_value)) {
+                    alert("not a number");
+                    return
+                }
+                if (input_value != "" && input_value.length == 10) {
+
+                    if (!checkNumber(input_value)) {
+                        addNumber(input_value, '', input_value);
+                        $('#value-search').val('')
+                    } else {
+                        alert("Already added");
+                    }
+
+                } else if (input_value.length != 10) {
+                    alert("10 currectors required");
+                }
+
+
+            }
+        });
+
+
+        function addNumber(number, id, fullName) {
+
+            if (!checkNumber(number)) {
+                count++;
+                var value = $('#search').html();
+                value = value.replace("Select contact", " ");
+                var span = '<div id="contact-item_' + (count) + '" class="contact-item"><input class="number" type="hidden" value="' + number + '" /> ' + fullName + ' <span id="remove-item_' + count + '" class="remove-item" onclick="removeItem(\'#contact-item_' + (count) + '\',\'#remove-item_' + count + '\')">&times;</span></div>';
+                $('#search').html(value + span);
+                if (id != '') {
+                    // $(id).remove();
+                }
+            } else {
+                alert("Already added");
+            }
+
+
+        }
+
+
+        function removeItem(contact_item, remove_item) {
+
+            $(remove_item).hide();
+            $(contact_item).hide(300, function () { $(this).remove(); });
+            console.log($('#search'));
+            var value = $('#search')[0].children.length;
+            setTimeout(function () {
+                if (value == 2) {
+                    $('#search').html("<div style='padding-top: 15px;' onclick=\"toggleitem('#search-list')\">"
+                        + "Select contact"
+                        + "</div>");
+                }
+            }, 200);
+
+        }
+
+        $.ajax({
+            url: "testdata.json",
+            method: "GET",
+            dataType: "JSON",
+            success: function (data) {
+                console.log(data);
+                populateList(data);
+            },
+            error: function (error) {
+                console.log(error);
+            }
+
+        });
+
+
+        function populateList(obj) {
+
+            var str = "";
+            for (let i = 0; i < obj.length; i++) {
+                str += '<li class="list-item" id="list-item_' + i + '" onclick="addNumber(\'' + obj[i].phone + '\',\'#list-item_' + i + '\',\'' + obj[i].firstname + " " + obj[i].lastname + '\')">'
+                    + '<div class="contact-wrapper">'
+                    + '<div class="contact-image">'
+                    + '<img src="img/avatar.jpg">'
+                    + '</div>'
+                    + '<div class="contact-info">'
+                    + '<div class="contact-title contact">'
+                    + obj[i].firstname + " " + obj[i].lastname
+                    + '</div>'
+                    + '<div class="contact-sub-title contact">'
+                    + obj[i].phone
+                    + '</div>'
+                    + '</div>'
+                    + '</div>'
+                    + '</li>';
+            }
+
+            document.getElementById('contact-list').innerHTML = str;
+
+        }
+
+        function toggleitem(id) {
+            $(id).slideToggle();
+        }
+
+        function slideUp(id) {
+            $(id).slideUp();
+        }
+
+        var btsearch = {
+            init: function (search_field, searchable_elements, searchable_text_class) {
+                $(search_field).keyup(function (e) {
+                    e.preventDefault();
+                    var query = $(this).val().toLowerCase();
+                    if (query) {
+                        // loop through all elements to find match
+                        $.each($(searchable_elements), function () {
+                            var title = $(this).find(searchable_text_class).text().toLowerCase();
+                            if (title.indexOf(query) == -1) {
+                                $(this).hide();
+                            } else {
+                                $(this).show();
+                            }
+                        });
+                    } else {
+                        // empty query so show everything
+                        $(searchable_elements).show();
+                    }
+                });
+            }
+        }
+
+        // INIT
+        $(function () {
+            // USAGE: btsearch.init(('search field element', 'searchable children elements', 'searchable text class');
+            btsearch.init('#value-search', '#contact-list li', '.contact');
+        });  
+    </script>
+
+
+</body>
+
+</html>
